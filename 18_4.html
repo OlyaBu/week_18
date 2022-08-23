@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>анонимный комментатор</title>
+  <style>
+    div {
+      padding: 1%;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>анонимный чат</h3>
+
+  <div class="chat" id="chat" style="background-color: rgb(241, 203, 227); color: blue;">
+  </div>
+  <textarea rows="5" cols="20"></textarea></div>
+  <button> выразить мнение </button>
+
+</body>
+<script>
+  const button = document.querySelector("button");
+  const textarea = document.querySelector("textarea");
+  const comments = document.querySelector("div");
+  let array = [];
+
+  button.addEventListener("click", function () {
+    let text = textarea.value;
+    textarea.value = "";
+
+    array.push(text);
+
+    comments.innerHTML = "";
+    render(comments, array);
+  });
+
+  function render(parentNode, data) {
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+
+      let node = document.createElement("div");
+      node.classList.add("comment");
+      node.textContent = item;
+
+      // кнопка удаления комментариев
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "X";
+
+      deleteButton.addEventListener("click", () => {
+        node.remove();
+        data.splice(i, 1);
+      });
+
+      node.append(deleteButton);
+      parentNode.append(node); // показывает на странице
+
+    }
+  }
+</script>
+
+</html>

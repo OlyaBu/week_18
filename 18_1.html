@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18_1</title>
+    <style>
+        div{
+            margin: 1%;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-weight: 400;
+        }
+        input:required:valid{
+            border-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Котоопросник</h1>
+    <form>
+        <div>
+            <label for="name">Кличка питомца</label>
+            <input type="text" id="name" placeholder=""name ></div>
+        <div>
+            <label for="owner">Имя владельца</label>
+            <input type="text" id="owner" placeholder="login" required>*</div>
+        <div>
+            <label for="owner2">email </label>
+            <input type="text" id="owner2" placeholder="email" required>*</div>
+        <label for="name">Порода сладкого пирожочека</label>
+        <select>
+            <option value="one"> Перс</option>
+            <option value="two">не Перс</option>
+            <option value="three">Самый сладкий котик</option>
+        </select>
+        <div>
+            <label for="name">Чем питается </label> </div>
+        Сухой корм <input type="radio" />
+        <br>Влажный корм
+        <input type="radio" />
+        <br>Натуральный корм
+        <input type="radio" />
+        <div>
+            Самец <input type="radio" name="sex" />
+            <br>Самка
+            <input type="radio" name="sex" />
+        </div>
+        <div>
+            <label for="number">Номер телефона</label>
+            <input type="tel" id="number" placeholder="+1-234-567-8901"  pattern="\+\d-\d{3}-\d{3}-\d{4}"required>* </div>
+        <div>
+            <label for="name">Тут можно написать какой котик сладкий</label></div>
+        <div>
+            <textarea rows="5" cols="20"></textarea></div>
+        <div>
+            <p>Загрузите ваши фото котика</p>
+            <p><input type="file" name="photo" multiple accept="image/*,image/jpeg">
+        </div>
+        <div>
+            <button>Сохранить</button></div>
+    </form>
+</body>
+
+</html>
