@@ -25,37 +25,12 @@
 <script>
   const button = document.querySelector("button");
   const textarea = document.querySelector("textarea");
-  const comments = document.getElementById("note");
-  let array = [];
+  const note = document.getElementById("note");
 
-  button.addEventListener("click", function() {
-    let text = textarea.value;
-    textarea.value = "";
+  button.addEventListener("submit", ()){
 
-    array.push(text);
-
-    comments.innerHTML = "";
-    render(comments, array);
-  });
-
-  function render(parentNode, data) {
-    for (let i = 0; i < data.length; i++) {
-      let item = data[i];
-
-      let node = document.createElement("div");
-      node.classList.add("comment");
-      node.textContent = item;
-
-      // кнопка удаления комментариев
-      let deleteButton = document.createElement("button");
-      deleteButton.textContent = "X";
-
-      deleteButton.addEventListener("click", () => {
-        node.remove();
-        data.splice(i, 1);
-      });
-    }
   }
-</script>
 
+  localStorage.getItem('note');
+  </script>
 </html>
