@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>анонимный комментатор</title>
+  <title>хранилище заметок</title>
   <style>
     div {
       padding: 1%;
@@ -14,21 +14,21 @@
 </head>
 
 <body>
-  <h3>анонимный чат</h3>
-
-  <div class="chat" id="chat" style="background-color: rgb(241, 203, 227); color: blue;">
+  <h3>хранилище заметок</h3>
+<div class="note" id="note"></div>
+  <div  style="background-color: rgb(241, 203, 227);">
+    <textarea rows="5" cols="20"></textarea></div>
   </div>
-  <textarea rows="5" cols="20"></textarea></div>
-  <button> выразить мнение </button>
+  <button> сохранить</button>
 
 </body>
 <script>
   const button = document.querySelector("button");
   const textarea = document.querySelector("textarea");
-  const comments = document.querySelector("div");
+  const comments = document.getElementById("note");
   let array = [];
 
-  button.addEventListener("click", function () {
+  button.addEventListener("click", function() {
     let text = textarea.value;
     textarea.value = "";
 
@@ -54,10 +54,6 @@
         node.remove();
         data.splice(i, 1);
       });
-
-      node.append(deleteButton);
-      parentNode.append(node); // показывает на странице
-
     }
   }
 </script>
