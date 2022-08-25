@@ -15,22 +15,45 @@
 
 <body>
   <h3>хранилище заметок</h3>
-<div class="note" id="note"></div>
-  <div  style="background-color: rgb(241, 203, 227);">
-    <textarea rows="5" cols="20"></textarea></div>
-  </div>
-  <button> сохранить</button>
+  <div class="list" id="list"></div>
+  <textarea rows="5" cols="20" id="comment"></textarea>
+  <button id="submitButton"> сохранить</button>
 
 </body>
 <script>
-  const button = document.querySelector("button");
-  const textarea = document.querySelector("textarea");
-  const note = document.getElementById("note");
+  button = document.querySelector('#submitButton');
+  const textarea = document.querySelector('textarea');
+  list = document.querySelector("#list");
 
-  button.addEventListener("submit", ()){
+  document.addEventListener('DOMContentLoaded', () => {
+    const comments = getData();
 
+    comments.map(comment => {
+      const box = document.createElement('div');
+      box.innerHTML = comment;
+
+      list.append(box)
+    });
+  });
+  button.addEventListener('click', postComment)
+
+  function postComment() {
+    const data = Date.now();
+    const value = textarea.value;
+    setData(value, data);
+  };
+
+  //возвращает массив
+  function getData() {
+    return JSON.parse(localStorage.getItem('comments')) || [];
   }
 
-  localStorage.getItem('note');
-  </script>
+  function setData(value,data) {
+    const comment = getData();
+    localStorage.setItem('comments', JSON.stringify(comments.push(value)));
+  }
+
+  const comments = ['fgdysgd','hdsjgdjsghsh'];
+</script>
+
 </html>
