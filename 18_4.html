@@ -14,46 +14,37 @@
 </head>
 
 <body>
-  <h3>хранилище заметок</h3>
-  <div class="list" id="list"></div>
-  <textarea rows="5" cols="20" id="comment"></textarea>
-  <button id="submitButton"> сохранить</button>
-
 </body>
+<form>
+<h1>Мои заметки:</h1>
+<textarea name="" id="" cols="30" rows="10"></textarea><br><br>
+<button>Отправить мои заметки в хранилище</button><br><br>
+</form>
+<button onclick="showNotes()">Показать все мои заметки</button>
+<div class="showNotes"></div>
+
+
 <script>
-  button = document.querySelector('#submitButton');
-  const textarea = document.querySelector('textarea');
-  list = document.querySelector("#list");
+let form = document.querySelector("form");
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const comments = getData();
+form.addEventListener("submit", () => {
+    let myNote = document.querySelector("textarea").value;
+    let array = [];
+    if (localStorage.getItem("note") == null) {
+        localStorage.setItem("note", myNote);
+    } else {
+        let previousNotes = localStorage.getItem("note");
+        let plusNotes = `${previousNotes} ${previousNotes}  <br>  ${myNote}`
 
-    comments.map(comment => {
-      const box = document.createElement('div');
-      box.innerHTML = comment;
+        localStorage.setItem("note", plusNotes)
+    }
+})
 
-      list.append(box)
-    });
-  });
-  button.addEventListener('click', postComment)
-
-  function postComment() {
-    const data = Date.now();
-    const value = textarea.value;
-    setData(value, data);
-  };
-
-  //возвращает массив
-  function getData() {
-    return JSON.parse(localStorage.getItem('comments')) || [];
-  }
-
-  function setData(value,data) {
-    const comment = getData();
-    localStorage.setItem('comments', JSON.stringify(comment.push(value)));
-  }
-
-  const comments = ['fgdysgd','hdsjgdjsghsh'];
+function showNotes() {
+    document.querySelector(".showNotes").innerHTML = "";
+    document.querySelector(".showNotes").innerHTML = localStorage.getItem("note");
+}
+</script>
 </script>
 
 </html>
