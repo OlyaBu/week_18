@@ -21,91 +21,115 @@
       flex-direction: column;
       flex-wrap: nowrap;
     }
-  .button{
-  background: rgb(184, 134, 184);
-  border-radius: 4px;
-  box-shadow: 0 6px 0 0 rgb(86, 8, 94);
-  color: white;
-  display: inline-block;
-  margin: 10px;
-  padding: 10px 20px;
-  position: relative;
-  text-decoration: none !important;
-  top: 0px;
-  transition: all 0.3s ease-in-out;
-}
 
-.button:active {
-  box-shadow: 0 0 0 0 rgb(86, 8, 94);
-  top: 6px;
-}
+    .button {
+      background: rgb(184, 134, 184);
+      border-radius: 4px;
+      box-shadow: 0 6px 0 0 rgb(86, 8, 94);
+      color: white;
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      position: relative;
+      text-decoration: none !important;
+      top: 0px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .button:active {
+      box-shadow: 0 0 0 0 rgb(86, 8, 94);
+      top: 6px;
+    }
   </style>
 </head>
 
 <body>
   <h3>анонимный чат</h3>
   <div class="container">
-    <div class="chat" id="chat" style="background-color: rgb(241, 203, 227); color: blue;">
-    </div>
-
-    <div>
-      <label for="girl"> <input type="radio" value="girl" id="girl" name="avatar"><img
-          src="https://cdn-icons-png.flaticon.com/512/8132/8132938.png" style="width:100px;"></label>
-      <label for="boy"> <input type="radio" value="boy" id="boy" name="avatar"> <img
-          src="https://cdn-icons-png.flaticon.com/512/8132/8132855.png" style="width:100px;"></label>
-    </div>
-    <div class="comment_place">
-      <input placeholder="Подпись" id="name">
-      <textarea rows="5" cols="20"></textarea>
-    </div>
-    <button style="width:100%" class="button"> выразить мнение </button>
+    <div class="chat" id="chat" style="background-color: rgb(241, 203, 227); color: blue;"></div>
+    <input placeholder="Подпись" id="author" class="author">
+    <textarea rows="5" cols="20" id="textarea"> </textarea>
+    <button style="width:100%" id="submit" onclick="checkSpam()"> выразить мнение </button>
   </div>
 </body>
+
+
 <script>
+  const comments = document.getElementById("chat");
   const button = document.querySelector("button");
   const textarea = document.querySelector("textarea");
-  const comments = document.getElementById("chat");
-  const name = document.getElementById("name")
+  const author = document.getElementById("author");
   let array = [];
+  //оставляем имя автора при перезагрузке страницы
+  document.addEventListener("DOMContentLoaded", () => {
+    let name = localStorage.getItem("name");
+    let localComments = JSON.parse(localStorage.getItem('localComments'));
 
-  button.addEventListener("click", function () {
-    let text = textarea.value;
-    textarea.value = "";
-    array.push(text);
+    if(name) {
+      author.value = name;
+    }
 
-    comments.innerHTML = "";
+    if (localComments) {
+      for (let i = 0; i < localComments.length; i++) {
+        array.push(localComments[i]);
+      }
+    };
     render(comments, array);
   });
 
+  function checkSpam() {
+    let text = textarea.value;
+    textarea.value ="";
+
+    if (text) {
+      array.push(text);
+    }
+
+    if (localStorage.getItem("name") == null) {
+      localStorage.setItem("name", author.value)
+    }
+
+    comments.innerHTML="";
+    render(comments, array);
+
+    localStorage.setItem('localComments', JSON.stringify(array));
+  }
   function render(parentNode, data) {
     for (let i = 0; i < data.length; i++) {
+
       let item = data[i];
 
-      const stopWords = ["xxx", "viagra", "ххх"];
-      let filtredText = item;
-      for (let word of stopWords) {
-        let reg = new RegExp(word, "ig");
-        filtredText = filtredText.replace(reg, "***");
+      //проверяем текст и заменяем запрещенные слова на  ***
+      const words = ['viagra', 'XXX'];
+      let filteredText = item;
+      for (let word of words) {
+        let reg = new RegExp(word, 'ig');
+
+        filteredText = filteredText.replace(reg, "***");
       }
 
       let node = document.createElement("div");
+      let nameNode= document.createElement("p");
+
       node.classList.add("comment");
 
-      // кнопка удаления комментариев
+      nameNode.textContent = localStorage.getItem("name");
+      node.textContent = `${nameNode.textContent}:${filteredText}`;
+
       let deleteButton = document.createElement("button");
-      deleteButton.textContent = "x";
+      deleteButton.classList.add("deleteButton");
+      deleteButton.textContent = "X"
 
       deleteButton.addEventListener("click", () => {
         node.remove();
         data.splice(i, 1);
+        localStorage.setItem('localComments', JSON.stringify(data));
       });
 
+      parentNode.append(node);
       node.append(deleteButton);
-      parentNode.append(node); // показывает на странице
-     
-      localStorage.setItem(render);
-
     }
+
   }
 </script>
 
